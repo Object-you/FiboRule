@@ -181,7 +181,22 @@
 				if (value[url.split('#')[0]]) {
 					window.open(value[url.split('#')[0]])
 				} else {
-					this.$message.error('请检查跳转配置')
+					let url2 = 'http://' + window.location.hostname
+					
+
+					switch(value.title){
+						case "决策平台":
+							url2 +=':80'
+							break
+						case "数据中心":
+							url2 +=':81'
+							break
+						case "权限系统":
+							url2 +=':82'
+							break
+					}
+					window.open(url2)
+					// this.$message.error('请检查跳转配置')
 				}
 			},
 			ReGetStorage() {

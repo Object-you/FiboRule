@@ -29,30 +29,34 @@ export const nodes= [{
 		url: "/createUserGroup.png",
 		haveChildren: true
 	}
-}, {
-	node: {
-		dataId: "19",
-		text: "并行",
-		type: 19,
-		url: "/parallelNode.png",
-		haveChildren: true
-	}
-}, {
-	node: {
-		dataId: "20",
-		text: "聚合",
-		type: 20,
-		url: "/gettogether.png"
-	}
-}, {
-	node: {
-		dataId: "21",
-		text: "冠军挑战",
-		type: 21,
-		url: "/champion.png",
-		haveChildren: true
-	}
-}, {
+}, 
+// {
+// 	node: {
+// 		dataId: "19",
+// 		text: "并行",
+// 		type: 19,
+// 		url: "/parallelNode.png",
+// 		haveChildren: true
+// 	}
+// },
+//  {
+// 	node: {
+// 		dataId: "20",
+// 		text: "聚合",
+// 		type: 20,
+// 		url: "/gettogether.png"
+// 	}
+// }, 
+// {
+// 	node: {
+// 		dataId: "21",
+// 		text: "冠军挑战",
+// 		type: 21,
+// 		url: "/champion.png",
+// 		haveChildren: true
+// 	}
+// }, 
+{
 	node: {
 		dataId: "4",
 		text: "规则集",
@@ -84,23 +88,25 @@ export const nodes= [{
 		url: "/jueceshuNode.png",
 		url2: '/jueceshu.png'
 	}
-}, {
-	node: {
-		dataId: "12",
-		text: "模型",
-		type: 15,
-		url: "/models.png",
-		url2: '/moxing.png'
-	}
-}, {
-	node: {
-		dataId: "18",
-		text: "远程调用",
-		type: 18,
-		url: "/rpc.png",
-		url2: '/rpcnode.png'
-	}
-}, {
+}, 
+// {
+// 	node: {
+// 		dataId: "12",
+// 		text: "模型",
+// 		type: 15,
+// 		url: "/models.png",
+// 		url2: '/moxing.png'
+// 	}
+// }, {
+// 	node: {
+// 		dataId: "18",
+// 		text: "远程调用",
+// 		type: 18,
+// 		url: "/rpc.png",
+// 		url2: '/rpcnode.png'
+// 	}
+// }, 
+{
 	node: {
 		dataId: "7",
 		text: "决策选项",

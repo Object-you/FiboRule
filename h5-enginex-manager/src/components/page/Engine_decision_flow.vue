@@ -657,13 +657,13 @@
 					// 	text: '批量测试',
 					// 	url: 'el-icon-set-up'
 					// }, 
-					{
-						text: '|'
-					},
-					{
-						text: '查看调用参数',
-						url: 'el-icon-set-up'
-					}, 
+					// {
+					// 	text: '|'
+					// },
+					// {
+					// 	text: '查看调用参数',
+					// 	url: 'el-icon-set-up'
+					// }, 
 					{
 						text: '|'
 					},

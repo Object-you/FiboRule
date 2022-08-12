@@ -33,10 +33,10 @@ switch (process.env.NODE_ENV) {
 			}
 		}
 		break
-	case 'release': // 军环境
+	case 'release': 
 		proxyObj = {
 			'/Riskmanage': {
-				target: 'http://192.168.3.155:8080', // 谭环境
+				target: 'http://139.196.184.169:80', 
 				changeOrigin: true, // 是否跨域
 				pathRewrite: {
 					'^/Riskmanage': '/Riskmanage'

@@ -177,7 +177,7 @@
 			
 			go(value) {
 				var url = window.location.href
-
+				
 				if (value[url.split('#')[0]]) {
 					window.open(value[url.split('#')[0]])
 				} else {

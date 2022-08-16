@@ -82,7 +82,7 @@
 				</el-form-item>
 				<el-form-item label="输出字段" prop="resultFieldEn">
 
-					<outcontent :outcontent="form.strategyOutputList" type="list_db" :zhezhao="false"
+					<outcontent :outcontent="form.strategyOutputList" type="list_db" :zhezhao="false" height="80px"
 						style="margin-top: 20px;margin-left: 50px;">
 
 						<div style="display:flex; align-items: center;">
@@ -244,11 +244,11 @@
 						message: '请选择维护字段',
 						trigger: 'change'
 					}],
-					resultFieldEn: [{
-						required: true,
-						message: '选择输出字段',
-						trigger: 'blur'
-					}]
+					// resultFieldEn: [{
+					// 	required: true,
+					// 	message: '选择输出字段',
+					// 	trigger: 'blur'
+					// }]
 				},
 				isTpye: 0,
 				tableColumn: [],

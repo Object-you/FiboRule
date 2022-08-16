@@ -107,6 +107,7 @@
 
 <template>
 	<div style="display: flex;overflow: hidden;" v-loading="loading">
+	
 		<div class="watchContLeft">
 			<div class="watchContSelect">
 				<el-select v-model="selectType" placeholder="请选择节点类型" clearable>
@@ -162,7 +163,7 @@
 
 								</div>
 
-
+								
 								<type2 :data="monitorInfo.snapshot" :readOnly="true" :rowkey="rowKey"
 									v-if="currNode.item.node.type==2"></type2>
 								<type3 :data="monitorInfo.snapshot" :readOnly="true" :rowkey="rowKey"
@@ -435,6 +436,7 @@
 					if (res.status == "1") {
 
 						if (res.data.length > 0) {
+							console.log(res)
 							this.currNode = Tempitem
 							this.rowKey = res.data[0].rowKey;
 							this.monitorInfo = res.data[0].monitorInfo

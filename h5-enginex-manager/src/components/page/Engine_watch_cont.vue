@@ -226,19 +226,6 @@
 							<p v-if="currNode.item.node.type==17">
 								结果：{{monitorInfo.result.result[0].result?monitorInfo.result.result[0].result:"无"}}</p>
 						</div>
-
-						<div>
-							<p class="type_title">
-								节点入参：
-							</p>
-							<pre style="overflow-x: auto;">{{JSON.stringify(monitorInfo.params,null,4)}}</pre>
-
-							<p class="type_title">
-								节点出参：
-							</p>
-							<pre style="overflow-x: auto;">{{JSON.stringify(monitorInfo.result,null,4)}}</pre>
-						</div>
-
 						<div v-if="StrategyList.length>0">
 							<p class="type_title">
 								策略详情：
@@ -264,6 +251,19 @@
 
 
 						</div>
+						<div>
+							<p class="type_title">
+								节点入参：
+							</p>
+							<pre style="overflow-x: auto;">{{JSON.stringify(monitorInfo.params,null,4)}}</pre>
+
+							<p class="type_title">
+								节点出参：
+							</p>
+							<pre style="overflow-x: auto;">{{JSON.stringify(monitorInfo.result,null,4)}}</pre>
+						</div>
+
+						
 
 
 					</div>

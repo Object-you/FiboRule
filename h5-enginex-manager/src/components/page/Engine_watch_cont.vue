@@ -474,6 +474,14 @@
 						// Result: 'score',
 						Score: 'score',
 					},
+					// '5': {
+					// 	result: '',
+					// 	name: 'cardName',
+					// 	ruleId: 'cardId',
+					// 	VersionId: 'cardVersionId',
+					// 	// Result: 'score',
+					// 	Score: 'score',
+					// },
 					'16': {
 						result: 'result',
 						name: 'decisionTablesName',

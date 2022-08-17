@@ -6,15 +6,7 @@ export const nodes= [{
 		url: "/start.png"
 	}
 }, 
-{
-	node: {
-		dataId: "0",
-		text: "名单库",
-		type: 5,
-		url: "/createBlackName.png",
-		url2: '/heimingdan.png'
-	}
-},
+
  {
 	node: {
 		dataId: "2",
@@ -100,6 +92,15 @@ export const nodes= [{
 		url2: '/moxing.png'
 	}
 }, 
+{
+	node: {
+		dataId: "0",
+		text: "名单库",
+		type: 5,
+		url: "/createBlackName.png",
+		url2: '/heimingdan.png'
+	}
+},
 // {
 // 	node: {
 // 		dataId: "18",

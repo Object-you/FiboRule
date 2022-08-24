@@ -83,11 +83,11 @@
 		<div :class="smallHeader?'MR_input MR_inputSmall':'MR_input'">
 			<div>
 				<p>评分卡代码: </p>
-				<el-input placeholder="请输入评分卡代码" size="small"  maxlength="30" v-model="code" :disabled="addVersionStatus" clearable></el-input>
+				<el-input placeholder="请输入评分卡代码" size="small"  maxlength="200" v-model="code" :disabled="addVersionStatus" clearable></el-input>
 			</div>
 			<div>
 				<p> 评分卡名称: </p>
-				<el-input placeholder="请输入评分卡名称" size="small"  maxlength="20" v-model="name" :disabled="addVersionStatus" clearable></el-input>
+				<el-input placeholder="请输入评分卡名称" size="small"  maxlength="200" v-model="name" :disabled="addVersionStatus" clearable></el-input>
 			</div>
 		</div>
 		<div :class="smallHeader?'MR_scope MR_scopeSmall':'MR_scope'">

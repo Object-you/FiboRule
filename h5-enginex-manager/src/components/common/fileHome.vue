@@ -49,10 +49,10 @@
 		</div>
 		<div class="fileHint" :style="{top:tempHintTop+'px',left:tempHintLeft+'px',display:tempHintTop&&tempHintLeft?'block':'none'}">
 			<p>
-				<el-button type="text" size="mini" @click="RenameFun">重命名</el-button>
+				<el-button type="text" size="mini" :disabled="tempId==99999999||tempId==0" @click="RenameFun">重命名</el-button>
 			</p>
 			<p>
-				<el-button type="text" size="mini" @click="delectFun">删除</el-button>
+				<el-button type="text" size="mini" :disabled="tempId==99999999||tempId==0" @click="delectFun">删除</el-button>
 			</p>
 			<p>
 				<el-button type="text" size="mini" @click="tempHintLeft=null;tempHintTop=null">取消</el-button>

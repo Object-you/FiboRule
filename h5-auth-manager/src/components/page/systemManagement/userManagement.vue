@@ -78,7 +78,7 @@
 
 		<!-- 修改密码 -->
 		<el-dialog title="修改密码" :visible.sync="dialogFormVisible" width="30%" class="edit-password-dialog">
-			<el-form :model="form" ref="changePasswordForm">
+			<el-form :model="form" ref="changePasswordForm" @submit="a">
 				<el-form-item label="新密码" label-width="100px" prop="password" :rules="[
                         { required: true, message: '不能为空！'}
                     ]">
@@ -138,6 +138,7 @@
 			this.organList();
 		},
 		methods: {
+			a(){},
 			closeChangePasswordForm() {
 				this.currId = "";
 				this.dialogFormVisible = false;

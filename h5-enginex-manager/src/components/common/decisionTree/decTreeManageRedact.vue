@@ -55,11 +55,11 @@
 		<div :class="smallHeader?'MR_input MR_inputSmall':'MR_input'">
 			<div>
 				<p>决策树代码: </p>
-				<el-input placeholder="请输入决策树代码"  size="small" maxlength="30" v-model="code" clearable :disabled="addVersionStatus"></el-input>
+				<el-input placeholder="请输入决策树代码"  size="small" maxlength="200" v-model="code" clearable :disabled="addVersionStatus"></el-input>
 			</div>
 			<div>
 				<p>决策树名称:</p>
-				<el-input placeholder="请输入决策树名称"  size="small" maxlength="20" v-model="name" clearable :disabled="addVersionStatus"></el-input>
+				<el-input placeholder="请输入决策树名称"  size="small" maxlength="200" v-model="name" clearable :disabled="addVersionStatus"></el-input>
 			</div>
 			<div>
 

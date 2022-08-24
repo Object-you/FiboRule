@@ -96,11 +96,11 @@
 		<div :class="smallHeader?'MR_input MR_inputSmall':'MR_input'">
 			<div>
 				<p>字段名称: </p>
-				<el-input placeholder="请输入字段名" maxlength="30" v-model="fieldEn" clearable></el-input>
+				<el-input placeholder="请输入字段名" maxlength="200" v-model="fieldEn" clearable></el-input>
 			</div>
 			<div>
 				<p>字段中文名: </p>
-				<el-input placeholder="请输入字段中文名" maxlength="20" v-model="fieldCn" clearable></el-input>
+				<el-input placeholder="请输入字段中文名" maxlength="200" v-model="fieldCn" clearable></el-input>
 			</div>
 			<div>
 				<p>值类型 : </p>

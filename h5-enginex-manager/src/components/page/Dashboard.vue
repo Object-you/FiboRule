@@ -4,7 +4,7 @@
 			<el-col :span="8">
 				<el-card shadow="hover" class="mgb20" style="height:252px;">
 					<div class="user-info">
-						<img src="../../assets/img/img.jpg" class="user-avator" alt />
+						<img src="../../assets/img/img2.jpg" class="user-avator" alt />
 						<div class="user-info-cont">
 							<div class="user-info-name">{{name}}</div>
 							<!-- <div>{{role}}</div> -->
@@ -38,7 +38,10 @@
 					<el-col :span="8">
 						<el-card shadow="hover" :body-style="{padding: '0px'}">
 							<div class="grid-content grid-con-1">
-								<i class="el-icon-lx-people grid-con-icon"></i>
+								<!-- <i class="el-icon-lx-people grid-con-icon"></i> -->
+								<div style="background-color: #409eff;height: 100%;width: 80px;">
+									<img src="../../assets/img/engine.png" style="width: 100%;height:100%" alt="" />
+								</div>
 								<div class="grid-cont-right">
 									<div class="grid-num">{{engineNum}}</div>
 									<div>引擎</div>
@@ -49,7 +52,9 @@
 					<el-col :span="8">
 						<el-card shadow="hover" :body-style="{padding: '0px'}">
 							<div class="grid-content grid-con-2">
-								<i class="el-icon-lx-notice grid-con-icon"></i>
+								<div style="background-color: #409eff;height: 100%;width: 80px;padding: 10px;">
+									<img src="../../assets/img/node.png" style="width: 100%;height:100%" alt="" />
+								</div>
 								<div class="grid-cont-right">
 									<div class="grid-num">{{engineNodeNum}}</div>
 									<div>决策节点</div>
@@ -59,8 +64,10 @@
 					</el-col>
 					<el-col :span="8">
 						<el-card shadow="hover" :body-style="{padding: '0px'}">
-							<div class="grid-content grid-con-3">
-								<i class="el-icon-lx-goods grid-con-icon"></i>
+							<div class="grid-content grid-con-2">
+								<div style="background-color: #409eff;height: 100%;width: 80px;padding: 10px;">
+									<img src="../../assets/img/result.png" style="width: 100%;height:100%" alt="" />
+								</div>
 								<div class="grid-cont-right">
 									<div class="grid-num">{{engineResultNum}}</div>
 									<div>决策结果</div>
@@ -316,7 +323,7 @@
 	.grid-content {
 		display: flex;
 		align-items: center;
-		height: 100px;
+		height: 80px;
 	}
 
 	.grid-cont-right {
@@ -373,9 +380,9 @@
 	}
 
 	.user-avator {
-		width: 120px;
-		height: 120px;
-		border-radius: 50%;
+		width: 80px;
+		height: 80px;
+		/* border-radius: 50%; */
 	}
 
 	.user-info-cont {

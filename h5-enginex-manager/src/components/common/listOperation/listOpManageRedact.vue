@@ -54,12 +54,12 @@
 		<div :class="smallHeader?'MR_input MR_inputSmall':'MR_input'">
 			<div>
 				<p>集合代码: </p>
-				<el-input placeholder="请输入集合代码" maxlength="30"  size="small" v-model="code" clearable :disabled="addVersionStatus">
+				<el-input placeholder="请输入集合代码" maxlength="200"  size="small" v-model="code" clearable :disabled="addVersionStatus">
 				</el-input>
 			</div>
 			<div>
 				<p>集合名称:</p>
-				<el-input placeholder="请输入集合名称" maxlength="20"  size="small" v-model="name" clearable :disabled="addVersionStatus">
+				<el-input placeholder="请输入集合名称" maxlength="200"  size="small" v-model="name" clearable :disabled="addVersionStatus">
 				</el-input>
 			</div>
 			<!-- <div>

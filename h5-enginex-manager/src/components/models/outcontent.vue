@@ -118,7 +118,7 @@
 				<el-button type="primary" @click="dialogSure()">确 定</el-button>
 			</span>
 		</el-dialog>
-		<el-dialog title="条件输出" :visible.sync="ruleOutDialog" width="40%" :close-on-click-modal="false" append-to-body @close="tempOutCondition='';tempIndex=''">
+		<el-dialog title="条件输出" :visible.sync="ruleOutDialog" width="900px" :close-on-click-modal="false" append-to-body @close="tempOutCondition='';tempIndex=''">
 			<el-select v-model="tempOutCondition.logical" placeholder="请选择关系符">
 				<el-option :key="1" label="AND" value="&&"></el-option>
 				<el-option :key="2" label="OR" value="||"></el-option>
@@ -130,7 +130,7 @@
 					 size="mini">
 						<el-option v-for="item in FieldUser" :label="item.fieldCn" :value="item.fieldEn"></el-option>
 					</el-select>
-					<ruleRelation style="width: 200px;" :openValue2="false" v-model="value.operator" :valueType="mixinGetValueTypeByEn(value.fieldEn)"
+					<ruleRelation  :openValue2="false" v-model="value.operator" :valueType="mixinGetValueTypeByEn(value.fieldEn)"
 					 :type="2" size="mini" :andTextInput="true"></ruleRelation>
 					<varialeSelect v-model="value.fieldValue" :valueType="mixinGetValueTypeByEn(value.fieldEn)" :variableType.sync="value.variableType" style="margin-left: 20px;" height="28px"></varialeSelect>
 					<i class="el-icon-circle-plus-outline" style="font-size: 20px;color: #409EFF;" @click="addRule(index)"></i>

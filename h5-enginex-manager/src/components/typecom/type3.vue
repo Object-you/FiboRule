@@ -206,6 +206,10 @@
 			readOnly:{
 				type: Boolean,
 				default :false
+			},
+			nodeName:{
+				type: String,
+				default :''
 			}
 		},
 		methods: {
@@ -294,7 +298,7 @@
 					"id": this.data.id,
 					"initEngineVersionId": String(this.data.Vid),
 					"nodeType": 3,
-					"nodeName": this.data.text,
+						"nodeName": this.nodeName || this.data.text,
 					"nodeCode": this.data.nodeCode,
 					"nodeOrder": this.data.nodeOrder,
 					"nodeX": this.data.x,

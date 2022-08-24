@@ -144,7 +144,7 @@
 	}
 
 	.versions>div:nth-of-type(1) {
-		height: 500px;
+		height: 25vh;
 	}
 
 	.versions_title {
@@ -335,7 +335,7 @@
 			<div class="decision_right">
 				<!-- 标签页 -->
 				<el-tabs type="border-card" tab-position="right" v-model="tabsModel"
-					:style="{display:rightHide?'none':'block','minWidth':'300px'}">
+					:style="{display:rightHide?'none':'block','minWidth':'300px','minHeight':'83%'}">
 					<!-- 右侧顶部 主要是删除 和 复制功能 -->
 					<div class="decision_right_header">
 						<div>
@@ -376,53 +376,53 @@
 								<div v-if="tempNode.item.node.type==1">
 								</div>
 								<div v-if="tempNode.item.node.type==2">
-									<type2 :data="tempNode" @callback="callback($event,tempNode)"></type2>
+									<type2 :data="tempNode" @callback="callback($event,tempNode)" :nodeName="tempNode.tempText"></type2>
 								</div>
 								<div v-if="tempNode.item.node.type==3">
-									<type3 :data="tempNode" @callback="callback($event,tempNode)"
+									<type3 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"
 										@setNextNodes="setNextNodes($event,tempNode)" :nodeNexts="tempNode.nodeNexts">
 									</type3>
 								</div>
 								<div v-if="tempNode.item.node.type==4">
-									<type4 :data="tempNode" @callback="callback($event,tempNode)"></type4>
+									<type4 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"></type4>
 								</div>
-								<div v-if="tempNode.item.node.type==5" style="height: 100%;">
-									<type5 :data="tempNode" @callback="callback($event,tempNode)"></type5>
+								<div v-if="tempNode.item.node.type==5" >
+									<type5 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"></type5>
 								</div>
-								<div v-if="tempNode.item.node.type==7" style="height: 100%;">
-									<type7 :data="tempNode" @callback="callback($event,tempNode)"
+								<div v-if="tempNode.item.node.type==7" >
+									<type7 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"
 										:nodeNexts="tempNode.nodeNexts" @setNextNodes="setNextNodes($event,tempNode)">
 									</type7>
 								</div>
-								<div v-if="tempNode.item.node.type==9" style="height: 100%;">
-									<type9 :data="tempNode" @callback="callback($event,tempNode)"
+								<div v-if="tempNode.item.node.type==9" >
+									<type9 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"
 										@setNextNodes="setNextNodes($event,tempNode)"></type9>
 								</div>
 								<div v-if="tempNode.item.node.type==14">
-									<type14 :data="tempNode" @callback="callback($event,tempNode)"></type14>
+									<type14 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"></type14>
 								</div>
 								<div v-if="tempNode.item.node.type==15">
-									<type15 :data="tempNode" @callback="callback($event,tempNode)"></type15>
+									<type15 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"></type15>
 								</div>
 								<div v-if="tempNode.item.node.type==16">
-									<type16 :data="tempNode" @callback="callback($event,tempNode)"></type16>
+									<type16 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"> </type16>
 								</div>
 								<div v-if="tempNode.item.node.type==17">
-									<type17 :data="tempNode" @callback="callback($event,tempNode)"></type17>
+									<type17 :data="tempNode" @callback="callback($event,tempNode)" :nodeName="tempNode.tempText"></type17>
 								</div>
 								<div v-if="tempNode.item.node.type==18">
-									<type18 :data="tempNode" @callback="callback($event,tempNode)"></type18>
+									<type18 :data="tempNode" @callback="callback($event,tempNode)" :nodeName="tempNode.tempText"></type18>
 								</div>
 								<div v-if="tempNode.item.node.type==19">
-									<type19 :data="tempNode" @callback="callback($event,tempNode)"
+									<type19 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"
 										:nodeNexts="tempNode.nodeNexts" @setNextNodes="setNextNodes($event,tempNode)">
 									</type19>
 								</div>
 								<div v-if="tempNode.item.node.type==20">
-									<type20 :data="tempNode" @callback="callback($event,tempNode)"></type20>
+									<type20 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"></type20>
 								</div>
 								<div v-if="tempNode.item.node.type==21">
-									<type21 :data="tempNode" @callback="callback($event,tempNode)"
+									<type21 :data="tempNode" @callback="callback($event,tempNode)"  :nodeName="tempNode.tempText"
 										:nodeNexts="tempNode.nodeNexts" @setNextNodes="setNextNodes($event,tempNode)">
 									</type21>
 								</div>
@@ -833,11 +833,13 @@
 
 				this.Node.forEach(value => {
 					if (value.id == temp.id) {
+						
 						if (typeof e == 'string') {
 							value.nodeJson = e
 						} else {
 							value.nodeJson = JSON.stringify(e)
 						}
+						value.text = this.tempNode.tempText
 					}
 				})
 			},

@@ -85,21 +85,21 @@
 			<el-row style="margin-bottom: 20px;">
 				<el-col :span="4" style="padding-top: 9px;">引擎编码：</el-col>
 				<el-col :span="20">
-					<el-input placeholder="" v-model="dialogCode" :disabled="true">
+					<el-input placeholder="" v-model="dialogCode" :disabled="true" maxlength="200">
 					</el-input>
 				</el-col>
 			</el-row>
 			<el-row style="margin-bottom: 20px;">
 				<el-col :span="4" style="padding-top: 9px;">引擎名称：</el-col>
 				<el-col :span="20">
-					<el-input v-model="dialogName" placeholder="请输入内容"></el-input>
+					<el-input v-model="dialogName" placeholder="请输入内容" maxlength="200"></el-input>
 				</el-col>
 			</el-row>
 
 			<el-row style="margin-bottom: 20px;">
 				<el-col :span="4" style="padding-top: 9px;">引擎描述：</el-col>
 				<el-col :span="20">
-					<el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="dialogDescription">
+					<el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="dialogDescription" maxlength="300">
 					</el-input>
 				</el-col>
 			</el-row>
@@ -107,13 +107,13 @@
 			<el-row style="margin-bottom: 20px;">
 				<el-col :span="4" style="padding-top: 9px;">回调地址：</el-col>
 				<el-col :span="20">
-					<el-input v-model="dialogCallbackUrl" placeholder=""></el-input>
+					<el-input v-model="dialogCallbackUrl" placeholder="" maxlength="200"></el-input>
 				</el-col>
 			</el-row>
 			<el-row style="margin-bottom: 20px;">
 				<el-col :span="4" style="padding-top: 9px;">异常回调：</el-col>
 				<el-col :span="20">
-					<el-input v-model="dialogExceptionCallbackUrl" placeholder="异常回调地址"></el-input>
+					<el-input v-model="dialogExceptionCallbackUrl" placeholder="异常回调地址" maxlength="200"></el-input>
 				</el-col>
 			</el-row>
 
@@ -263,6 +263,10 @@
 			},
 			// 保存
 			saveEngine: function() {
+				if(!this.dialogName){
+					this.$message.error('请填写引擎名称')
+					return
+				}
 				let engine = {
 					id: this.dialogId,
 					code: this.dialogCode,
@@ -277,6 +281,7 @@
 						this.getEngineLists({
 							pageNo: 1
 						}); // 重新加载表格数据
+						this.$message.success('保存成功')
 						this.dialogVisible = false;
 						
 					}

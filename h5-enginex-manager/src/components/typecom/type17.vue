@@ -145,6 +145,10 @@
 			readOnly:{
 				type: Boolean,
 				default :false
+			},
+			nodeName:{
+				type: String,
+				default :''
 			}
 		},
 		methods: {
@@ -245,7 +249,7 @@
 					"initEngineVersionId": String(this.data.Vid),
 					"nodeType": 17,
 					"cardId": this.checked.id,
-					"nodeName": this.data.text,
+						"nodeName": this.nodeName || this.data.text,
 					"nodeCode": "ND_" + this.data.nodeOrder,
 					"nodeOrder": this.data.nodeOrder,
 					"nodeX": this.data.x,

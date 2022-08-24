@@ -152,6 +152,10 @@
 			readOnly: {
 				type: Boolean,
 				default: false
+			},
+			nodeName:{
+				type: String,
+				default :''
 			}
 		},
 		methods: {
@@ -254,7 +258,7 @@
 					"initEngineVersionId": String(this.data.Vid),
 					"nodeType": 4,
 					// "cardId": this.checked.id,
-					"nodeName": this.data.text,
+						"nodeName": this.nodeName || this.data.text,
 					"nodeCode": "ND_" + this.data.nodeOrder,
 					"nodeOrder": this.data.nodeOrder,
 					"nodeX": this.data.x,
@@ -264,6 +268,7 @@
 				}
 				this.setType(obj).then(res => {
 					if (res.status == '1') {
+						this.$message.success('提交成功')
 						this.$emit('callback', JSON.stringify(subobj))
 					}
 				})

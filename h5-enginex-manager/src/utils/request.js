@@ -130,14 +130,14 @@ instance.interceptors.response.use((response) => {
 	if (response.data.status === "0") {
 		if (response.data.error === "01000103") {
 			if (document.getElementsByClassName('el-message').length === 0) {
-				ElementUI.Message.error(response.data.msg);
+				errorMessage(response.data.msg);
 				router.push({
 					path: '/login',
 				})
 			}
 
 		} else {
-			ElementUI.Message.error(response.data.msg);
+			errorMessage(response.data.msg);
 		}
 	} else {
 
@@ -174,16 +174,40 @@ instance.interceptors.response.use((response) => {
 }, (error) => {
 	// console.log('error', error)
 	if (error.message.match(/timeout/)) {
-		ElementUI.Message.error('请求超时,请稍后再试！');
+		errorMessage('请求超时,请稍后再试！');
 	} else if (error.response.status === 500) {
-		ElementUI.Message.error('连接失败,请稍后再试！');
+		errorMessage('连接失败,请稍后再试！');
 	} else if (error.response.status === 502) {
-		ElementUI.Message.error('网关超时,请稍后再试！');
+		errorMessage('网关超时,请稍后再试！');
 	} else {
-		ElementUI.Message.error('连接失败,请稍后再试！');
+		errorMessage('连接失败,请稍后再试！');
 	}
 	return Promise.reject(error)
 });
+
+
+
+
+
+var arr = []
+
+// 报错拦截 两秒钟以内
+function errorMessage(str) {
+	if (arr.indexOf(str) === -1) {
+		ElementUI.Message.error(str)
+	}
+	arr.push(str)
+	setTimeout(() => {
+		arr = arr.filter(x => x !== str)
+	}, 2000)
+}
+
+
+
+
+
+
+
 
 function deepTirm(e) {
 	Object.keys(e).forEach(value => {

@@ -263,6 +263,10 @@
 			readOnly:{
 				type: Boolean,
 				default :false
+			},
+			nodeName:{
+				type: String,
+				default :''
 			}
 		},
 		methods: {
@@ -358,7 +362,7 @@
 					"nodeType": this.data.item.node.type,
 					"nodeJson": JSON.stringify(subobj),
 					"nodeOrder": this.data.nodeOrder,
-					"nodeName": this.data.text,
+						"nodeName": this.nodeName || this.data.text,
 					"nodeCode": this.data.nodeCode,
 					"nodeX": this.data.x,
 					"nodeY": this.data.y,

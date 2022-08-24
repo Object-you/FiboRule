@@ -26,7 +26,7 @@
 		<div class="type_header">
 			<p>节点类型:分流</p>
 		</div>
-		<div style="height: 80%;overflow: scroll;overflow-x: hidden;">
+		<div style="overflow: auto;overflow-x: hidden;">
 			<div v-for="(item,index) in shunt" style="display:flex;align-items: center;margin-top: 10px;">
 				<p style="font-size: 12px;margin-right: 5px;">分流{{item.sandbox}}:</p>
 				<div style="width: 100px;margin-right: 5px;">
@@ -39,7 +39,7 @@
 					@click="delect(index)"></i>
 			</div>
 		</div>
-		<div v-if="!readOnly">
+		<div class="type3_submit_home" v-if="!readOnly">
 			<el-button type="primary" round @click="submit">提交</el-button>
 		</div>
 
@@ -81,6 +81,10 @@
 			readOnly: {
 				type: Boolean,
 				default: false
+			},
+			nodeName:{
+				type: String,
+				default :''
 			}
 		},
 		methods: {
@@ -88,8 +92,8 @@
 				let num = 0
 				let havefu = false
 				this.shunt.forEach(value => {
-					num += parseInt(value.proportion)
-					if (parseInt(value.proportion) < 0) {
+					num += Number(value.proportion)
+					if (Number(value.proportion) < 0) {
 						havefu = true
 						this.$message.error('不允许负值')
 					}
@@ -108,7 +112,7 @@
 						"id": this.data.id,
 						"initEngineVersionId": String(this.data.Vid),
 						"nodeType": 7,
-						"nodeName": this.data.text,
+							"nodeName": this.nodeName || this.data.text,
 						"nodeCode": this.data.nodeCode,
 						"nodeOrder": this.data.nodeOrder,
 						"nodeX": this.data.x,

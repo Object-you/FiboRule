@@ -158,7 +158,7 @@
 		<div class="type3_submit_home" v-if="!readOnly">
 			<el-button type="primary" round @click="submit">提交</el-button>
 		</div>
-		<el-dialog title="选择规则(多选)" :visible="dialogVisible" width="60%" @close="handleClose" :append-to-body="true">
+		<el-dialog title="选择规则(多选)" :visible="dialogVisible" width="1100px" @close="handleClose" :append-to-body="true">
 
 			<div class="type2_rule_header">
 				<div style="float: left;width: 80%;">
@@ -376,6 +376,10 @@
 			readOnly: {
 				type: Boolean,
 				default: false
+			},
+			nodeName:{
+				type: String,
+				default :''
 			}
 		},
 		methods: {
@@ -570,7 +574,7 @@
 					"id": this.data.id,
 					"initEngineVersionId": String(this.data.Vid),
 					"nodeType": 2,
-					"nodeName": this.data.text,
+						"nodeName": this.nodeName || this.data.text,
 					"nodeCode": this.data.nodeCode,
 					"nodeOrder": this.data.nodeOrder,
 					"nodeX": this.data.x,

@@ -81,9 +81,6 @@ export default {
 				this.$router.push('/');
 				this.mixinReGetStorage()
 			}
-			else{
-                this.$message.error(data.msg);
-            }
         }
     },
 };

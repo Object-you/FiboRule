@@ -2,7 +2,7 @@
 	<div class="variateSelect" :style="{width:width,height:height}">
 		<div style="width: 35%;" class="variateSelectLeft" :style="{height:height}">
 			<el-dropdown trigger="click" @command="em">
-				<span class="el-dropdown-link" style="color: #fff;">
+				<span class="el-dropdown-link" style="color: #fff;white-space:nowrap ;">
 					{{variableType==1?"常量":variableType==2?"变量":variableType==3?"自定义":"错误"}}<i
 						class="el-icon-arrow-down el-icon--right"></i>
 				</span>
@@ -230,6 +230,7 @@
 		padding-left: 6px;
 		padding-right: 30px;
 		justify-content: center;
+		
 	}
 
 	.varialeType3Button {

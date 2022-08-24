@@ -18,10 +18,13 @@
 		</div>
 		<div>
 			<p style="font-size: 12px;font-weight: bold;margin-bottom: 10px;border-top: 1px solid #ddd;padding-top:5px ;">当前选择的模型:</p>
-			<el-select v-model="value" filterable placeholder="请选择子引擎" @change="change" clearable>
+			<el-select v-model="value" filterable placeholder="请选择子引擎" clearable>
 				<el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
 				</el-option>
 			</el-select>
+		</div>
+		<div class="type3_submit_home"  v-if="!readOnly">
+			<el-button type="primary" round @click="submit">提交</el-button>
 		</div>
 
 	</div>
@@ -58,6 +61,14 @@
 			readOnly:{
 				type: Boolean,
 				default :false
+			},
+			nodeName:{
+				type: String,
+				default :''
+			},
+			nodeName:{
+				type: String,
+				default :''
 			}
 		},
 		methods: {
@@ -77,12 +88,12 @@
 				// 	this.loading = false
 				// })
 			},
-			change() {
+			submit() {
 				let obj = {
 					"id": this.data.id,
 					"initEngineVersionId":String(this.data.Vid),
 					"nodeType": 14,
-					"nodeName": this.data.text,
+					"nodeName": this.nodeName || this.data.text,
 					"nodeCode": this.data.nodeCode,
 					"nodeOrder": this.data.nodeOrder,
 					"nodeX":  this.data.x,
@@ -94,10 +105,14 @@
 						"type": 14
 					})
 				}
+				this.loading = true
 				this.setType(obj).then(res=>{
 					if(res.status=="1"){
+						this.$message.success('提交成功')
+						
 						this.$emit('callback',this.value)
 					}
+					this.loading = false
 				})
 			},
 			async getType(param) {

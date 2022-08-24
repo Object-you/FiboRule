@@ -258,7 +258,8 @@
 				this.ruleOutDialog = false
 			},
 			delectRule(index) {
-				this.tempOutCondition.conditionList.splice(index, 1)
+				
+				index!=0 && this.tempOutCondition.conditionList.splice(index, 1)
 			},
 			addRule(index) {
 				this.tempOutCondition.conditionList.splice(index + 1, 0, {

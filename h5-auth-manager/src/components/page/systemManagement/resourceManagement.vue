@@ -4,7 +4,7 @@
 			<el-row :gutter="20">
 				<div>
 					<el-button @click="add()" type="primary">新增</el-button>
-					<el-button @click="using(-1)" type="danger">删除</el-button>
+					<el-button @click="using(-1)" :disabled="!multipleSelection.length" type="danger">删除</el-button>
 				</div>
 			</el-row>
 		</div>

@@ -1,5 +1,5 @@
 <template>
-	<div class="content-wrapper">
+	<div class="content-wrapper" v-loading="loading">
 		<div>
 			<el-row>
 				<el-col :span="18">
@@ -12,7 +12,7 @@
 				</el-col>
 				<el-col :span="6">
 					<div >
-						<el-input placeholder="搜索" v-model="searchVal" class="input-with-select">
+						<el-input placeholder="搜索操作名称" v-model="searchVal" class="input-with-select">
 							<el-button slot="append" icon="el-icon-search" @click="getlist"></el-button>
 						</el-input>
 					</div>
@@ -106,7 +106,9 @@
 				dateValue: [formatDate(new Date, 'yyyy-MM-dd'), formatDate(new Date, 'yyyy-MM-dd')],
 				searchVal: "",
 				dialogVisible: false,
-				currentItem: {}
+				currentItem: {},
+				loading : false
+
 			};
 		},
 		created() {
@@ -122,6 +124,7 @@
 				this.getlist();
 			},
 			async getlist() {
+				this.loading = true
 				const data = await getLogList({
 					searchKey: this.searchVal,
 					startDate: this.dateValue[0],
@@ -129,6 +132,7 @@
 					pageNo: this.page,
 					pageSize: this.pageSize
 				})
+				this.loading = false
 				if (data.status != "0") {
 					const listUser = data.data.logList;
 					const pager = data.data.pager;

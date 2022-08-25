@@ -10,7 +10,7 @@
 
 <script>
 	// import bus from '@/components/common/rule/bus.js'
-	import cont from '@/components/common/rule/ruleCont.vue'
+	import cont from '@/components/common/rule/ruleListPage.vue'
 	import {
 		getRulesList, // 获取列表
 		addListRules, //新增文件夹

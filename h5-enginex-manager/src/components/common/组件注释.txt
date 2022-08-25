@@ -1,0 +1,66 @@
+common
+    dataRinse - 数据清洗
+        :dataClear - 数据清洗的简单选择规则
+        :dataRinseCont - 数据清洗列表
+        :opType - 数据清洗循环部分
+        :rinseManageRedact - 数据清洗设置页面
+        :RuleCont  - 数据清洗的 专属的特殊规则
+        :teParam - 数据清洗的 专属的特殊输入框
+    decision - 决策表
+        :decCont - 决策表的列表页
+        :decManageRedact - 决策表的设置页面
+        :recursion - 决策表的左边表头
+        :topRecursion - 决策表的上表头
+    decisionTree - 决策树
+        :decTreeCont - 决策树列表页
+        :decTreeManageRedact - 决策树的设置页面
+        :tree - 决策树的树形结构
+        :treeNode -  树形结构的节点
+    listOperation - 集合规则
+        :listOperation - 集合规则列表页
+        :listOpManageRedact - 集合规则的设置页面
+        :opType - 集合规则的循环部分
+        :RuleCont - 集合规则的专属特殊规则
+    rule - 规则集
+        :groovyRuleManageRedact - 脚本规则集设置页面
+        :ruleBlockVo - 复杂规则集的块
+        :ruleListPage - 规则列表页
+        :ruleManageRedact - 复杂规则集的设置页面
+    SCO - 评分卡
+        :recursion - 评分卡的表头
+        :SCOCont - 评分卡列表页
+        :SCOManageRedact - 评分卡设置页面
+    autoInput - 自动输入表单 用于根据类型自动切换输入框
+    bindParam - 绑定变量
+    Cascader - Cascader封装
+    charts  - 图表组件
+    codemirrir - 代码输入框
+    contNewFile - 文件夹新建文件
+    endRule - 终止规则（决策流节点内使用）
+    fieldUserTable - 字段选择框
+    fileHome - 文件夹组件的封装
+    file - 文件夹组件
+    flowHint - 决策流的操作提示框
+    GeneralRule - 普通规则集组件 （与复杂规则集中的规则部分类似 但是剔除了 for循环 和 条件组）
+    Header - 头部导航
+    Home - 导航框架文件
+    listOutput - 集合规则用的特殊输出
+    multipleRule - 规则多选框 用于多选规则集
+    ruleRelation - 规则中 比较符 与 值输入框 的组件
+    sidebar  - 左侧导航栏
+    Tag - 缓存标签
+    TeV2 - 按@键可以弹出指标选择器的输入框
+    teParam - 另一种 更为复杂的 输入框
+    textCustom - 自定义框
+    textInput - 双击变成输入框 丢焦变成文本的组件
+    textSelect - 双击变成选择框 丢焦变成文本的组件
+    Version - 版本组件
+    watch_strategy - 决策流监控中 用来查看 各个策略的统一处理弹窗
+models
+    addBlockWhite - 添加黑白名单弹窗
+    batchTest - 决策流批量测试
+    detail - 模型详情
+    index - 模型页面
+    outcontent - 命中输出
+    RuleCont - 复杂规则集的核心规则
+    varialeSelect - 切换常量变量自定义的输入框

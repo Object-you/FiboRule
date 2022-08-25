@@ -1,21 +1,24 @@
 
-
 <template>
 	<div class="cont_cont">
 
-		<div class="cont_left" v-loading="leftloading">
+		<div class="cont_left" v-loading="leftloading" v-if="!listRedact">
 			<div class="cont_header">
 				<p class="cont_header_title">{{title}}</p>
 				<p class="cont_header_subtitle">{{title}}</p>
 			</div>
-			
 			<contNewFule v-model="tempNewF" :newf.sync="newf" @newFileSure="newFileSure" @newFile="newFile" ></contNewFule>
+			
 			<div class="cont_list">
+			
 				<fileHome :data="list" @curr="clickCurrid" :currid="currid" @RenameFun="RenameFun" @RenameClose="RenameClose"
 				 @updatafilelist="updatafilelist" @delectFun="delectFun">
 				</fileHome>
+
+
 			</div>
 		</div>
+
 		<div class="cont_right" v-loading="contloading" @click="tempHintLeft=null;tempHintTop=null;">
 			<div v-if="!listRedact">
 				<div v-if="showRight===false" class="cont_right_hint">
@@ -28,16 +31,16 @@
 							<el-button type="danger" @click="using(-1)" :disabled="this.selection.length>0?false:'disabled'">删除</el-button>
 							<el-button type="success" @click="using(1)" :disabled="this.selection.length>0?false:'disabled'">启用</el-button>
 							<el-button type="warning" @click="using(0)" :disabled="this.selection.length>0?false:'disabled'">停用</el-button>
-							<!-- <el-select v-model="tempMove" placeholder="移动到:" style="margin-left: 10px;" :disabled="this.selection.length>0?false:'disabled'" filterable @change="mixinMoveChange"> -->
 							<el-select v-model="tempMove" placeholder="移动到:" style="margin-left: 10px;" :disabled="this.selection.length>0?false:'disabled'"
-							 filterable @change="moveChange">
+							 filterable @change="mixinMoveChange">
 								<el-option v-for="value in listunfold" :key="value.id" :label="value.name" :value="value.id" v-show="value.id!=99999999"></el-option>
 							</el-select>
-							<!-- 断点  准备移动 -->
 						</div>
-						<div v-if="getData.type==1">
-							<el-button @click="upShow=true">批量导入</el-button>
-							<el-button @click="down">模板下载</el-button>
+						<div style="display: flex;">
+							<el-input placeholder="请输入搜索内容" v-model="search">
+								<i slot="suffix" class="el-input__icon el-icon-search" @click="getsearch"></i>
+							</el-input>
+							<el-button style="margin-left: 10px;" @click="upShow=true" v-if="getData.type==1">批量导入</el-button>
 						</div>
 					</div>
 					<div class="cont_right_cont">
@@ -52,13 +55,7 @@
 											{{scope.row[item.row]?"是":"否"}}
 										</span>
 										<span v-else-if="item.type==='State'">
-											{{scope.row[item.row]=="1"?'启用':'未启用'}}
-										</span>
-										<span v-else-if="item.type==='type'">
-											{{scope.row[item.row]=="1"?'数值型':(scope.row[item.row]=="2"?'字符型':(scope.row[item.row]=="3"?'枚举型':(scope.row[item.row]=="4"?'小数型':(scope.row[item.row]=="5"?'数组型':(scope.row[item.row]=="6"?'JSON型':'')))))}}
-										</span>
-										<span v-else-if="item.fn">
-											{{item.fn(scope.row[item.row])}}
+											{{scope.row[item.row]==1?'启用':'未启用'}}
 										</span>
 										<span v-else-if="item.type==='Time'" style="white-space: nowrap;" class="contText">{{
 													new Date(scope.row[item.row]).toLocaleDateString().replace(/\//g, "-") + " " + new Date(scope.row[item.row]).toTimeString().substr(0, 8)
@@ -68,6 +65,7 @@
 										</span>
 									</template>
 								</el-table-column>
+
 								<el-table-column label="操作" align="center" size="s">
 									<template slot-scope="scope">
 										<el-button icon="el-icon-setting" circle size="mini" @click="dialogShow(scope.row.id)"></el-button>
@@ -75,21 +73,34 @@
 								</el-table-column>
 							</el-table>
 							<el-pagination style="float: right;margin-right: 40px;margin-top: 40px;" :current-page="currPage"
-							 @current-change="clickpage" background layout="prev, pager, next" :total="data.data.pager.total">
+							 @current-change="clickpage" background layout="prev, pager, next" :total="data.data.pageInfo.total">
 							</el-pagination>
 						</div>
+
+
+
+
+
+
+
 					</div>
 				</div>
-
-
 			</div>
-			<template v-else>
-				<dataManageRedact @close="listRedact=false;tempRedactId=0" @Ok="listRedact=false;tempRedactId=0;getlist();currPage=1"
-				 :updata="getData.updatafield" :id='tempRedactId' :fieldTypeId="currid" :setsave="getData.setsave" :getInfo="getData.getInfo"
-				 :ftype="getData.type"></dataManageRedact>
-			</template>
-		</div>
+			<div v-else style="height: 100%;overflow: hidden;">
+				<easyDataManageRedact @close="listRedact=false;tempRedactId=0" @Ok="listRedact=false;tempRedactId=0;getlist()"
+				 :updata="getData.updatafield" :id='tempRedactId' :nameId="currid" :setsave="getData.setsave" :getInfo="getData.getInfo"
+				 :type="getData.type" v-if="getData.type==1">
+				</easyDataManageRedact>
 
+				<dataManageRedact @close="listRedact=false;tempRedactId=0" @Ok="listRedact=false;tempRedactId=0;getlist()" :getData="getData"
+				 :id='tempRedactId' :nameId="currid" :type="getData.type" v-if="getData.type==2">
+				</dataManageRedact>
+				
+				<groovyRuleManageRedact @close="listRedact=false;tempRedactId=0" @Ok="listRedact=false;tempRedactId=0;getlist()"  :getData="getData"
+				  :id='tempRedactId' :nameId="currid" :type="getData.type" v-if="getData.type==3">
+				</groovyRuleManageRedact>
+			</div>
+		</div>
 		<el-dialog title="上传文件" :visible.sync="upShow" width="30%" :before-close="upShowClose">
 			<div style="margin: 0 auto;display: flex;justify-content: center;">
 				<el-upload class="upload-demo" ref="upload" action="doUpload" :limit="1" :file-list="fileList" :before-upload="beforeUpload"
@@ -101,32 +112,87 @@
 			</div>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="upShow = false">取消</el-button>
-				<el-button type="primary" @click="submitUpload()">确定</el-button>
+				<el-button type="primary" @click="submitUpload();" :disabled="fileName?false:'disabled'">确定</el-button>
 			</span>
+
+
 		</el-dialog>
+		<el-dialog title="导入结果" :visible.sync="upCallbackShow" width="60%" close-on-click-modal close-on-press-escape
+		 show-close>
+			<p style="font-size: 18px;font-weight: bold;">
+				导入成功{{callbackresult.sucRows}}条,失败{{callbackresult.failRows}}条,重复{{callbackresult.repeatRows}}条,已存在{{callbackresult.existRows}}条
+			</p>
+			<div style="">
+				<div style="width:98%;border-bottom: 1px dashed #ddd;padding: 1%;">
+					<p style="font-weight: bold;font-size: 16px;">文件夹不存在({{callbackresult.result.folderNotExistList.length}})</p>
+					<p v-for="value in callbackresult.result.folderNotExistList" style="margin-top: 10px;">{{value}}</p>
+				</div>
+				<div style="width:98%;border-bottom: 1px dashed #ddd;padding: 1%;">
+					<p style="font-weight: bold;font-size: 16px;">系统中已存在的代码({{callbackresult.result.existCodeList.length}})</p>
+					<p v-for="value in callbackresult.result.existCodeList" style="margin-top: 10px;">
+						{{value}}
+					</p>
+				</div>
+				<div style="width:98%;border-bottom: 1px dashed #ddd;padding: 1%;">
+					<p style="font-weight: bold;font-size: 16px;">系统中已存在的名称({{callbackresult.result.existNameList.length}})</p>
+					<p v-for="value in callbackresult.result.existNameList" style="margin-top: 10px;">{{value}}</p>
+				</div>
+
+				<div style="width:98%;border-bottom: 1px dashed #ddd;padding: 1%;">
+					<p style="font-weight: bold;font-size: 16px;">表格中重复的代码({{callbackresult.result.rpCodeList.length}})</p>
+					<p v-for="value in callbackresult.result.rpCodeList" style="margin-top: 10px;">{{value}}</p>
+				</div>
+				<div style="width:98%;border-bottom: 1px dashed #ddd;padding: 1%;">
+					<p style="font-weight: bold;font-size: 16px;">表格中重复的名称({{callbackresult.result.rpNameList.length}})</p>
+					<p v-for="value in callbackresult.result.rpNameList" style="margin-top: 10px;">{{value}}</p>
+				</div>
+			</div>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="upCallbackShow = false">取消</el-button>
+			</span>
+
+
+		</el-dialog>
+
+
+
 	</div>
+
+
+
 </template>
 
 <script>
 	import contNewFule from '@/components/common/contNewFile.vue'
 	import '@/assets/css/cont.css'
+	import dataManageRedact from '@/components/common/rule/ruleManageRedact.vue'
+	import groovyRuleManageRedact from '@/components/common/rule/groovyRuleManageRedact.vue'
 	import fileHome from '@/components/common/fileHome.vue'
-	import dataManageRedact from '@/components/common/dataManageRedact.vue'
 	import contmixin from '@/utils/contminxin/contmixin.js'
-	import {
-		updateFieldFolder
-	} from '@/api/index.js'
 	export default {
 		mixins: [
 			contmixin
 		],
 		components: {
-			fileHome,
+		
+			groovyRuleManageRedact,
+			// file,
 			dataManageRedact,
-			updateFieldFolder,
+			fileHome,
 			contNewFule
 		},
-	
+		created() {
+			this.getData.getTree({
+				parentId: 0,
+				treeType:this.getData.treeType,
+				type: 1
+			}).then(res => {
+				this.list = this.listTreeDeep(res.data, 1)
+				this.clickCurrid(99999999)
+			})
+
+		
+		},
 		props: {
 			title: {
 				type: String,
@@ -135,8 +201,7 @@
 			getData: {
 				type: Object,
 				default: null
-			},
-
+			}
 		},
 		watch: {
 			list() {
@@ -148,9 +213,24 @@
 		data() {
 			return {
 				list: [],
+				callbackresult: {
+					sucRows: '',
+					failRows: '',
+					repeatRows: '',
+					existRows: '',
+					result: {
+						existCodeList: [],
+						existNameList: [],
+						folderNotExistList: [],
+						rpCodeList: [],
+						rpNameList: []
+					}
+				},
+				upCallbackShow: false,
 				Uploadloading: false,
 				tempMove: '',
-				leftloading: true,
+				leftloading: false, //暂时关闭loading
+				search: "",
 				fileName: "",
 				fileList: [],
 				upShow: false,
@@ -160,125 +240,42 @@
 				contloading: false,
 				newf: false,
 				tempNewF: "",
-				tempHintTop: null,
-				tempHintLeft: null,
-				tempId: null,
 				listRedact: false, //新增页面开启
 				tempRedactId: 0,
 				selection: []
 			}
 		},
-		created() {
-			this.getData.getTree({
-				type: this.getData.type
-			}).then(res => {
-				this.list = this.listTreeDeep(res.data, 1)
-				this.clickCurrid(99999999)
-			})
-		},
 		methods: {
-			moveChange(e) { //移动文件夹
-				let arr = this.selection.map((value) => {
-					return value.id
-				})
-				if (arr.length < 1) {
-					this.$message.error('未选择任何文件');
-					return
-				}
+			getsearch() {
+				this.contloading = true
 				let params = {
-					ids: arr,
-					folderId: e
-				}
-				updateFieldFolder(params).then(res => {
-					if (res.status == "1") {
-						this.clickCurrid(this.currid)
-						this.$message({
-							message: '移动成功',
-							type: 'success'
-						});
-						this.selection = []
+
+					key: "ruleName",
+					status: "0,1",
+					"parentIds": String(this.currid) === "99999999" ? '' : String(this.currid),
+					"pageNum": 1,
+					isSearch: 1,
+					ruleInfo: {
+
+						name: this.search,
 					}
-				})
-				this.tempMove = ""
-			},
-
-			down() {
-				window.open(window.origin + '/Riskmanage/v2/datamanage/field/downTemplate')
-			},
-			delectFun(id) {
-				let name
-				this.deepGetCurr(id, this.list, (value) => {
-					name = value.name
-				})
-				let params = {
-					status: -1,
-					id: id,
-					fieldType: name
 				}
-				this.getData.updatalist(params).then(res => {
-					if (res.status === "1") {
-						this.$message({
-							type: 'success',
-							message: '删除成功!'
-						});
-
-						this.deepGetCurr(id, this.list, (value, item, index) => {
-							item.splice(index, 1)
-						})
-
-
-					}
-					this.leftloading = false
-					this.currid = 99999999
-					this.getlist()
-
-				}).catch(() => {
-					this.$message.error("请求失败了" + '-_-');
-					this.leftloading = false
+				this.getData.getlist(params).then(res => {
+					this.data = res
+					this.contloading = false
 				})
+				this.currPage = 1
 			},
-			updatafilelist(params) {
-				this.leftloading = true
-				let tempNum = null
-
-				this.deepGetCurr(params.id, this.list, (value) => {
-					tempNum = value.parentId
-				})
-				params.parentId = tempNum == 99999999 ? 0 : tempNum
-				tempNum = null
-				let obj = {
-					fieldType: params.name,
-					id: params.id,
-					parentId: params.parentId
-				}
-				this.getData.updatalist(obj).then(res => {
-					if (res.status === "1") {
-						this.$message({
-							message: '修改成功',
-							type: 'success'
-						});
-						this.deepGetCurr(params.id, this.list, (value) => {
-							value.name = params.name
-							value.Rename = false
-						})
-						this.leftloading = false
-					} else {
-						this.leftloading = false
-					}
-				}).catch(() => {
-					this.$message.error("请求失败了" + '-_-');
-					this.leftloading = false
-				})
-			},
-
-
 			getlist() {
 				this.contloading = true
 				this.listRedact = false
 				let params = {
-					"isCommon": 1,
-					"fieldTypeId": String(this.currid),
-					"pageNo": 1
+					status: "0,1",
+					ruleInfo: {},
+					"pageNum": 1
+				}
+				if (String(this.currid) !== "99999999") {
+					params.ruleInfo.parentId = this.currid
 				}
 				this.getData.getlist(params).then(res => {
 					this.data = res
@@ -290,59 +287,41 @@
 				this.currPage = e
 				this.contloading = true
 				let params = {
-					"isCommon": 1,
-					"fieldTypeId": String(this.currid),
-					"pageNo": e
+					status: "0,1",
+					ruleInfo: {},
+					"pageNum": e
+				}
+				if (String(this.currid) !== "99999999") {
+					params.ruleInfo.parentId = this.currid
 				}
 				this.getData.getlist(params).then(res => {
 					if (res.status == "1") {
 						this.data = res
-						this.selection = []
 						this.contloading = false
-					}
-				})
-			},
-			using(id) {
-
-				let arr = this.selection.map((value) => {
-					return value.id
-				})
-				if (arr.length < 1) {
-					this.$message.error('未选择任何文件');
-					return
-				}
-				let params = {
-					status: id,
-					ids: arr.join(','),
-					fieldTypeId: this.currid
-				}
-
-				this.getData.fieldusing(params).then(res => {
-					if (res.status == "1") {
-						this.$message({
-							message: '操作成功',
-							type: 'success'
-						});
-						this.getlist()
-						this.$store.dispatch('reGetfielduser')
+						this.selection = []
 					}
 				})
 			},
 			newFileSure() {
 				this.leftloading = true
 				let params = {
-					parentId: this.currid,
-					fieldType: this.tempNewF,
-					type: this.getData.type
+					parentId: String(this.currid),
+					name: this.tempNewF,
+					"treeType": this.getData.treeType,
+					"type": "1",
+					"engineId": ""
 				}
+				// if (this.getData.type == 2) {
+				// 	params.treeType = '5'
+				// }
 				if(this.mixnewFileZindexVerify(this.list,this.currid)==6){
 					this.$message.error('已达到最深层级')
 					this.leftloading = false
 					return
 				}
-				
 				this.mixnewFileSure(params)
-			}
+			},
+			
 		}
 
 

@@ -299,7 +299,7 @@
 </template>
 
 <script>
-import zoomView from '@/components/common/ZoomView.vue'
+
 // import miniSCO from '@/components/common/miniSCO.vue'
 import type4 from '@/components/typecom/type4.vue'
 import type3 from '@/components/typecom/type3.vue'
@@ -332,7 +332,6 @@ import watchStrategy from '@/components/common/watch_strategy.vue'
 export default {
 	components: {
 
-		zoomView,
 		// miniSCO,
 		type17,
 		type16,

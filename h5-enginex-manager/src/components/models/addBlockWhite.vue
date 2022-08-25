@@ -114,7 +114,7 @@
 	</div>
 </template>
 <script>
-import FieldUserDialog from './fieldUserDialog.vue'
+
 import {
 	saveBlackWhiteList,
 	updateBlackWhiteList
@@ -132,7 +132,7 @@ var validateName = (rule, value, callback) => {
 export default {
 	name: 'addBlockWhite',
 	components: {
-		FieldUserDialog,
+	
 		outcontent
 	},
 	props: {

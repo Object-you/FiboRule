@@ -130,11 +130,11 @@
 
 <script>
 	import ruleRelation from '@/components/common/ruleRelation.vue'
-	import bigElCascader from '@/components/common/bigElCascader.vue'
+
 	export default {
 		components: {
 			ruleRelation,
-			bigElCascader
+	
 		},
 		name: 'rule',
 		data() {

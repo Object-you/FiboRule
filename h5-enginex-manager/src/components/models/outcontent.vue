@@ -81,7 +81,7 @@
 			<slot></slot>
 		</div>
 
-		<div v-for="(value,index) in outcontent" class="rule_home" style="display: flex;position: relative;" :style="{backgroundColor:value.red?'#f56c6c':''}">
+		<div v-for="(value,index) in outcontent"  class="rule_home" style="display: flex;position: relative;" :style="{backgroundColor:value.red?'#f56c6c':''}">
 		<!-- {{value}} -->
 			<div class="rule_fa">
 				<el-button icon="el-icon-plus" circle @click="outAdd(index+1)" :size="size"></el-button>
@@ -93,7 +93,9 @@
 			</div>
 
 			<div style="display: flex;align-items: center;">
-				<el-select :value="getCn(value.fieldId)" :size="size" placeholder="请选择" style="width: 200px;margin-right: 10px;" @focus="outClick(index)">
+			<!-- {{FieldUser}} -->
+				<el-select filterable :value="value.fieldId" @input="dialogSure($event,value)" :size="size" placeholder="请选择" style="width: 200px;margin-right: 10px;">
+					<el-option v-for="item in FieldUser" :label="item.fieldCn" :value="item.id"></el-option>
 				</el-select>
 				<p style="margin-right: 10px;">=</p>
 
@@ -101,7 +103,8 @@
 
 			</div>
 		</div>
-		<el-dialog title="输入参数"  :visible.sync="dialogVisible" append-to-body width="50%" >
+		<!-- 添加 append-to-body 会使 outcontent  丢失监听 -->
+		<!-- <el-dialog title="输入参数"  :visible.sync="dialogVisible"  width="50%" >
 			<div class="rule_dialg_header">
 				请选择参数：
 				<div>
@@ -117,8 +120,8 @@
 				<el-button @click="dialogVisible = false;radio='';search=''">取 消</el-button>
 				<el-button type="primary" @click="dialogSure()">确 定</el-button>
 			</span>
-		</el-dialog>
-		<el-dialog title="条件输出" :visible.sync="ruleOutDialog" width="900px" :close-on-click-modal="false" append-to-body @close="tempOutCondition='';tempIndex=''">
+		</el-dialog> -->
+		<el-dialog title="条件输出" :visible.sync="ruleOutDialog" width="900px" :close-on-click-modal="false"  @close="tempOutCondition='';tempIndex=''">
 			<el-select v-model="tempOutCondition.logical" placeholder="请选择关系符">
 				<el-option :key="1" label="AND" value="&&"></el-option>
 				<el-option :key="2" label="OR" value="||"></el-option>
@@ -269,6 +272,7 @@
 					operator: '',
 					variableType: 1,
 				})
+				
 			},
 			ruleOutDialogOpen(e, index) {
 				this.tempIndex = index
@@ -318,40 +322,41 @@
 					obj.strategyType = this.type
 				}
 				this.outcontent.splice(index, 0, obj)
+				console.log(this.outcontent)
 			},
 			outDelect(index) {
 				this.outcontent.splice(index, 1)
 			},
-			dialogSure() {
-				if (this.radio == '') {
-					this.$message.error('请选择一个字段，或者选择取消')
-				} else {
+			dialogSure(event,value) {
+				// if (this.radio == '') {
+				// 	this.$message.error('请选择一个字段，或者选择取消')
+				// } else {
 					// console.log(this.tempcur)
-					if (this.tempcur.split('###')[1] === "Data") {
-						this.Data.forEach((value, index) => {
-							if (index === parseInt(this.tempcur.split('###')[0])) {
-								console.log(value)
-								value.fieldId = this.radio + '|' + this.getvalueEn(this.radio)
-								value.operator = ""
-								value.fieldValue = ""
-							}
-						})
-					} else if (this.tempcur.split('###')[1] === "out") {
+					// if (this.tempcur.split('###')[1] === "Data") {
+					// 	this.Data.forEach((value, index) => {
+					// 		if (index === parseInt(this.tempcur.split('###')[0])) {
+					// 			console.log(value)
+					// 			value.fieldId = this.radio + '|' + this.getvalueEn(this.radio)
+					// 			value.operator = ""
+					// 			value.fieldValue = ""
+					// 		}
+					// 	})
+					// } else if (this.tempcur.split('###')[1] === "out") {
 						// console.log(this.outcontent)
-						this.outcontent.forEach((value, index) => {
-							if (index === parseInt(this.tempcur.split('###')[0])) {
-								value.fieldId = this.radio
-								value.fieldEn = this.mixinGetvalueEn(value.fieldId)
+						// this.outcontent.forEach((value, index) => {
+						// 	if (index === parseInt(this.tempcur.split('###')[0])) {
+								value.fieldId = event
+								// value.fieldEn = this.mixinGetvalueEn(value.fieldId)
 								// value.fieldEn = this.mixinGetvalueEn(this.radio)
-								this.$set(value,'fieldEn',this.mixinGetvalueEn(this.radio))
+								this.$set(value,'fieldEn',this.mixinGetvalueEn(value.fieldId))
 								value.fieldValue = ''
-							}
-						})
-					}
-					this.dialogVisible = false;
-					this.radio = '';
-					this.search = '';
-				}
+						// 	}
+						// })
+					// }
+					// this.dialogVisible = false;
+					// this.radio = '';
+					// this.search = '';
+				// }
 
 			},
 			getCn(id, type) {
@@ -384,19 +389,21 @@
 				})
 				return num
 			},
-			dataClick(index, id) {
-				this.tempcur = index + '###Data'
-				this.radioList = this.FieldUser
-				this.radio = Number(id.split('|')[0])
-				console.log(id)
-				this.dialogVisible = true
-			},
-			outClick(index) {
-				this.tempcur = index + '###out'
-				console.log(this.tempcur)
-				this.radioList = this.FieldUser
-				this.dialogVisible = true
-			},
+			// dataClick(index, id) {
+			// 	this.tempcur = index + '###Data'
+			// 	this.radioList = this.FieldUser
+			// 	this.radio = Number(id.split('|')[0])
+			// 	console.log(id)
+			// 	this.dialogVisible = true
+			// },
+			// outClick(index) {
+			// 	this.tempcur = index + '###out'
+				
+			// 	this.radioList = this.FieldUser
+				
+			// 	this.dialogVisible = true
+				
+			// },
 			getvalueType(cont) {
 				let num
 				this.FieldUser.forEach(value => {

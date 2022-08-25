@@ -5,15 +5,15 @@
 				<!-- <el-col :span="16"> -->
 				<div >
 					<el-button @click="add()" type="primary">新增</el-button>
-					<el-button @click="using(-1)" type="danger">删除</el-button>
-					<el-button @click="using(1)" type="success">启用</el-button>
-					<el-button @click="using(0)" type="warning">停用</el-button>
+					<el-button @click="using(-1)"  :disabled="!multipleSelection.length" type="danger">删除</el-button>
+					<el-button @click="using(1)"  :disabled="!multipleSelection.length" type="success">启用</el-button>
+					<el-button @click="using(0)"  :disabled="!multipleSelection.length" type="warning">停用</el-button>
 				</div>
 				<!-- </el-col> -->
 			</el-row>
 		</div>
 		<div class="tab-wrapper">
-			<div>
+			<div v-loading="loading">
 				<el-table border ref="multipleTable" :data="dataList" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
 					<el-table-column type="selection" width="55">
 					</el-table-column>
@@ -55,8 +55,9 @@
 			</div>
 		</div>
 		<!-- 添加编辑 -->
-		<el-dialog title="配置账号" :visible.sync="dialogFormVisible" width="30%" class="edit-password-dialog">
-			<el-form :model="form" ref="changeOrganForm" label-width="100px" label-position="left">
+		<el-dialog title="配置账号" :visible.sync="dialogFormVisible" v-if="dialogFormVisible" width="30%" class="edit-password-dialog" @close="form.name='';form.code=''">
+			
+			<el-form :model="form" ref="changeOrganForm" label-width="100px" label-position="left"  v-loading="addLoading">
 				<el-form-item label="名称" prop="name" :rules="[
                         { required: true, message: '不能为空！'}
                     ]">
@@ -68,11 +69,12 @@
 					<el-input v-model="form.code" autocomplete="off"></el-input>
 				</el-form-item>
 			</el-form>
-			<div slot="footer" class="dialog-footer">
-				<el-button type="primary" @click="changeOrgan('changeOrganForm')">确 定</el-button>
+			<div slot="footer" class="dialog-footer"  >
+				<el-button type="primary" @click="changeOrgan('changeOrganForm')" :disabled="addLoading">确 定</el-button>
 				<el-button @click="cancel()">取 消</el-button>
 
 			</div>
+			
 		</el-dialog>
 
 	</div>
@@ -98,7 +100,9 @@
 					name: "",
 					code: ""
 				},
-				currItem: {}
+				currItem: {},
+				addLoading:false,
+				loading:true
 			};
 		},
 		created() {
@@ -138,18 +142,23 @@
 				this.dialogFormVisible = true;
 			},
 			async update(form) {
+				this.addLoading = true
 				const data = await updateOrgan(form)
+				this.addLoading = false
 				if (data.status != "0") {
 					this.$message({
 						message: '操作成功！',
 						type: "success"
 					});
+					
 					this.getlist();
 					this.cancel();
 				}
 			},
 			async save(form) {
+				this.addLoading = true
 				const data = await saveOrgan(form)
+				this.addLoading = false
 				if (data.status != "0") {
 					this.$message({
 						message: '操作成功！',
@@ -203,10 +212,12 @@
 				this.getlist();
 			},
 			async getlist() {
+				this.loading = true
 				const data = await getOrganList({
 					pageNo: this.page,
 					pageSize: this.pageSize
 				})
+				this.loading = false
 				if (data.status != "0") {
 					const listData = data.data.listOrgan;
 					const pager = data.data.pager;

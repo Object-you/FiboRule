@@ -126,13 +126,7 @@
 								<div v-if="data.conditionType!=4&&out!='out'" style="display: flex;" :style="{backgroundColor:item.red?'#f56c6c':''}">
 									
 									<myCascader  v-model="item.fieldEn" size="mini" :options="fieldUserObj" isString clearable @change="ruleCascaderChange(item)"></myCascader>	
-									<!-- <el-cascader v-model="item.fieldEn" filterable size="mini" :options="fieldUserObj" clearable @change="ruleCascaderChange(item)"
-										:key="keyValue+(item.random?item.random:0)" :props="{ expandTrigger: 'hover' }" @visible-change="randomAdd(item,$event)">
-									</el-cascader> -->
-									
-									<!-- <bigElCascader v-model="item.fieldEn" filterable size="mini" :options="fieldUserObj"
-										clearable @change="ruleCascaderChange(item)" :Mykey="keyValue"
-										:props="{ expandTrigger: 'hover' }"></bigElCascader> -->
+
 										
 									<ruleRelation v-model="item.operator" :value2.sync="item.fieldValue"
 										:variableType.sync="item.variableType"
@@ -264,11 +258,11 @@
 
 <script>
 	import ruleRelation from '@/components/common/ruleRelation.vue'
-	import bigElCascader from '@/components/common/bigElCascader.vue'
+
 	export default {
 		components: {
 			ruleRelation,
-			bigElCascader
+
 		},
 		name: 'rule',
 		data() {

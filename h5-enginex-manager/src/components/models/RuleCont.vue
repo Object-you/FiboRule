@@ -99,8 +99,7 @@
 				
 					<div class="Rule_cont" :style="{marginTop:'12px'}"></div>
 					<myCascader  v-model="data.fieldEn" size="mini" :options="fielduserArr" isString clearable @change="EnChange"></myCascader>	
-					<!-- <el-cascader v-model="data.fieldEn" filterable size="mini" :options="fielduserArr" :key="keyValue+(data.random?data.random:0)" @visible-change="randomAdd(data,$event)"
-						:props="{ expandTrigger: 'hover' }" @change="EnChange"></el-cascader> -->
+				
 						
 					<!-- for 的输入 -->
 				</div>
@@ -148,41 +147,22 @@
 								</div>
 
 
-								<!-- <el-input v-model="item.fieldValue" maxlength="30" size="mini" placeholder="请输入内容,最长30位"
-									style="width: 100px;margin-left: 10px;"
-									v-if="mixinGetValueTypeByEn(item.fieldEn)!==3&&['is empty','not empty'].indexOf(item.operator)==-1">
-								</el-input>
-								<el-select v-model="item.fieldValue" placeholder="请选择" size="mini"
-									style="width: 100px;margin-left: 10px;"
-									v-if="mixinGetValueTypeByEn(item.fieldEn)===3">
-									<el-option label="是" value="1"></el-option>
-									<el-option label="否" value="0"></el-option>
-								</el-select> -->
+							
 
 							</div>
 							<div v-else style="display: flex;" :style="{backgroundColor:item.red?'#f56c6c':''}">
-								<!-- {{sEn}} -->
+					
 								<!-- for规则部分 -->
 
-								<!-- {{sEn}} -->
 								
 								<myCascader  v-model="item.fieldEn" size="mini" :options="getUserObj" isString clearable @change="forChange(item)"></myCascader>	
 
-								<!-- <el-cascader size="mini" filterable v-model="item.fieldEn" :options="getUserObj" @visible-change="randomAdd(item,$event)"
-									:key="keyValue+(item.random?item.random:0)" :props="{ expandTrigger: 'hover' }" @change="forChange(item)">
-								</el-cascader> -->
+							
 								
 								<ruleRelation v-model="item.operator" :value2.sync="item.fieldValue"
 									:variableType.sync="item.variableType" :valueType="getvalueTypebyEn(item.fieldEn)"
 									size="mini"></ruleRelation>
-								<!-- <el-input v-model="item.fieldValue" maxlength="30" size="mini" placeholder="请输入内容,最长30位"
-									style="width: 100px;margin-left: 10px;" v-if="getvalueTypebyEn(item.fieldEn)!==3&&['is empty','not empty'].indexOf(item.operator)==-1">
-								</el-input>
-								<el-select v-model="item.fieldValue" placeholder="请选择" size="mini"
-									style="width: 100px;margin-left: 10px;" v-if="getvalueTypebyEn(item.fieldEn)===3">
-									<el-option label="是" value="="></el-option>
-									<el-option label="否" value="!="></el-option>
-								</el-select> -->
+							
 
 							</div>
 
@@ -208,6 +188,7 @@
 						@delectLogical="delectLogical"></rule>
 				</div>
 			</div>
+			<!-- 条件组的输出 -->
 			<div v-if="data.conditionType==5" class="RuleCont_for_out" :style="{backgroundColor:data.red1?'#f56c6c':''}">
 				<span style="font-size: 12px;margin-left: 5px;">命中条件：</span>
 				[
@@ -220,7 +201,7 @@
 
 			</div>
 			<div v-if="data.loopGroupActions.length>0" class="RuleCont_for_out">
-			<!-- 打点 - for计算 -->
+			<!-- 打点 - for的计算 -->
 				<div v-for="(item,index) in data.loopGroupActions"
 					style="display: flex; align-items: center;margin-bottom: 5px;margin-left: 5px;"
 					:style="{backgroundColor:item.red?'#f56c6c':''}"
@@ -242,9 +223,7 @@
 						v-if="[2,4,6,7].indexOf(item.actionType)!=-1"></el-input>
 
 					<myCascader  v-model="item.actionValue"  v-if="item.actionType==3" style="width: 120px;" size="mini" :options="getUserObj" isString clearable @change="forChange(item)"></myCascader>
-					<!-- <el-cascader size="mini" style="width: 120px;" filterable v-model="item.actionValue"
-						:options="getUserObj" :key="keyValue+(item.random?item.random:0)" v-if="item.actionType==3" @visible-change="randomAdd(item,$event)"
-						:props="{ expandTrigger: 'hover' }"></el-cascader> -->
+				
 					
 					<i class="el-icon-circle-plus-outline" style="color: #66B1FF;margin-left: 3px;"
 						@click="addLoopOut(index)"></i>
@@ -267,11 +246,10 @@
 		name: 'rule',
 		data() {
 			return {
-				color: ['#0D183E', '#409EFF', '#67C23A', '#F56C6C', '#FFCD43'],
-				En: '',
-				keyValue: 1, //用于给级联选择框重新渲染
-				keyValueReady: false,
-				actionTypelist: [{
+				color: ['#0D183E', '#409EFF', '#67C23A', '#F56C6C', '#FFCD43'], //边框颜色
+				En: '', // 如选择了for规则 需要取被for的指标的值下的 元素
+				//for命中的输出类型
+				actionTypelist: [{ 
 						label: '计数',
 						value: 1
 					},
@@ -308,7 +286,7 @@
 				}
 			}
 			this.$nextTick(() => {
-				this.keyValueReady = true
+			
 				if (this.sEn !== "") {
 					this.En = this.sEn
 				}
@@ -316,30 +294,36 @@
 
 		},
 		props: {
+			// 上级传下来的dataJson 用于层级传递json型的数据
 			sdataJson: {
 				type: Object | String | Number | Boolean,
 				default: () => {
 					return {}
 				}
 			},
+			// 上一层的规则类型 如果是 for 说明 上层是 for
 			fieldType: {
 				type: String,
 				default: ''
 			},
+			// 当前位第ZIndex层
 			ZIndex: {
 				type: Number,
 				default: -1
 			},
+			// 上级传下来的En 用来确定datajson的具体路径
 			sEn: {
 				type: String,
 				default: ''
 			},
+			// 规则主体值
 			data: {
 				type: Object,
 				default () {
 					return {}
 				}
 			},
+			//  用来确定规则的marginTop
 			top: {
 				tyep: String,
 				default: '8px'
@@ -348,12 +332,14 @@
 				type: Number,
 				default: -1
 			},
+			// 上层的for使用的节点
 			suseingfield: {
 				type: Array,
 				default () {
 					return []
 				}
 			},
+			// 是否为 for的输出部分 如果为 out则是for的输出部分 如果是unout则不是
 			out: {
 				type: String,
 				default: 'unout'
@@ -845,17 +831,7 @@
 			}
 		},
 		watch: {
-			getUserObj() {
-				if (this.keyValueReady) {
-					this.keyValue++
-				}
-
-			},
-			fielduserArr() {
-				if (this.keyValueReady) {
-					this.keyValue++
-				}
-			}
+			
 		}
 
 	}
